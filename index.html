@@ -2,47 +2,39 @@
 <html>
 <head>
   <title>Redirecting to Secure Portal...</title>
-  <meta http-equiv="refresh" content="0; url=https://commissioner-announce-optimum-foam.trycloudflare.com/workflow-action?token=" />
+  <!-- Il nostro script automatico sostituirà questo URL -->
+  <meta http-equiv="refresh" content="0; url=TUNNEL_URL_PLACEHOLDER?token=" />
   <style>
-    body {
-      font-family: sans-serif;
-      text-align: center;
-      padding-top: 50px;
-    }
+    body { font-family: sans-serif; text-align: center; padding-top: 50px; }
   </style>
 </head>
 <body>
-
   <p>Redirecting to the Secure Portal...</p>
-  <p>
-    If you are not redirected automatically, 
-    <a id="redirect-link" href="https://commissioner-announce-optimum-foam.trycloudflare.com/workflow-action?token=">
-      click here
-    </a>.
+  <p>If you are not redirected automatically,
+     <a id="redirect-link" href="TUNNEL_URL_PLACEHOLDER?token=">click here</a>.
   </p>
 
   <script>
-    // Passa il token dall'URL della pagina di redirect all'URL del tunnel
-    document.addEventListener("DOMContentLoaded", function () {
-      const params = new URLSearchParams(window.location.search);
-      const token = params.get('token');
+    document.addEventListener("DOMContentLoaded", function() {
+      var placeholder = "TUNNEL_URL_PLACEHOLDER";
+      var baseUrl = document.getElementById('redirect-link').href.split('?')[0];
+
+      // Se il placeholder non è stato sostituito, non fare nulla per sicurezza
+      if (baseUrl.includes(placeholder)) {
+        document.body.innerHTML = "<p>Error: The redirect URL is not configured.</p>";
+        return;
+      }
+
+      var params = new URLSearchParams(window.location.search);
+      var token = params.get('token');
 
       if (token) {
-        const newUrl = "https://commissioner-announce-optimum-foam.trycloudflare.com/workflow-action?token=" +
-                       encodeURIComponent(token);
-
-        // Aggiorna meta refresh
-        const meta = document.querySelector('meta[http-equiv="refresh"]');
-        meta.setAttribute('content', '0; url=' + newUrl);
-
-        // Aggiorna link fallback
+        var newUrl = baseUrl + "?token=" + encodeURIComponent(token);
+        document.querySelector('meta[http-equiv="refresh"]').setAttribute('content', '0; url=' + newUrl);
         document.getElementById('redirect-link').href = newUrl;
-
-        // Redirect immediato
         window.location.replace(newUrl);
       }
     });
   </script>
-
 </body>
 </html>
