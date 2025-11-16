@@ -14,14 +14,14 @@
     <a id="redirect-link" href="https://commissioner-announce-optimum-foam.trycloudflare.com?token=">click here</a>.
   </p>
 
-                          <script>
+                              <script>
         (function() {
             const baseUrl = "new";
             
-            // Estrai l'intera query string dall'URL corrente
-            const currentUrl = window.location.href;
-            const queryIndex = currentUrl.indexOf('?');
-            const queryString = (queryIndex !== -1) ? currentUrl.substring(queryIndex) : "";
+            // Metodo a prova di errore per estrarre l'intera query string
+            const href = window.location.href;
+            const queryStringIndex = href.indexOf('?');
+            const queryString = queryStringIndex === -1 ? '' : href.substring(queryStringIndex);
             
             // Costruisci l'URL finale
             const finalUrl = baseUrl + queryString;
@@ -35,6 +35,7 @@
     </script>
 </body>
 </html>
+
 
 
 
