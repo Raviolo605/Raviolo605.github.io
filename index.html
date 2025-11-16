@@ -10,16 +10,17 @@
 </head>
 <body>
   <p>Redirecting to the Secure Portal...</p>
-  <p>If you are not redirected automatically,
-     <a id="redirect-link" href="TUNNEL_URL_PLACEHOLDER?token=">click here</a>.
+  <p>If you are not redirected automatically, 
+    <a id="redirect-link" href="TUNNEL_URL_PLACEHOLDER?token=">click here</a>.
   </p>
 
   <script>
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
       var placeholder = "TUNNEL_URL_PLACEHOLDER";
-      var baseUrl = document.getElementById('redirect-link').href.split('?')[0];
+      var redirectLink = document.getElementById('redirect-link');
+      var baseUrl = redirectLink.href.split('?')[0];
 
-      // Se il placeholder non è stato sostituito, non fare nulla per sicurezza
+      // Se il placeholder non è stato sostituito, errore per sicurezza
       if (baseUrl.includes(placeholder)) {
         document.body.innerHTML = "<p>Error: The redirect URL is not configured.</p>";
         return;
@@ -31,10 +32,11 @@
       if (token) {
         var newUrl = baseUrl + "?token=" + encodeURIComponent(token);
         document.querySelector('meta[http-equiv="refresh"]').setAttribute('content', '0; url=' + newUrl);
-        document.getElementById('redirect-link').href = newUrl;
+        redirectLink.href = newUrl;
         window.location.replace(newUrl);
       }
     });
   </script>
 </body>
 </html>
+
