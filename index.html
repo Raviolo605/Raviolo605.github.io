@@ -14,27 +14,33 @@
     <a id="redirect-link" href="https://commissioner-announce-optimum-foam.trycloudflare.com?token=">click here</a>.
   </p>
 
-                                  <script>
+                                      <script>
         (function() {
-            const baseUrl = "new";
-            
-            // Metodo a prova di errore per estrarre l'intera query string
-            const href = window.location.href;
-            const queryStringIndex = href.indexOf('?');
-            const queryString = queryStringIndex === -1 ? '' : href.substring(queryStringIndex);
-            
-            // Costruisci l'URL finale
-            const finalUrl = baseUrl + queryString;
-            
-            document.getElementById('status').textContent = 'Reindirizzamento in corso...';
-            document.getElementById('details').textContent = 'A ' + finalUrl;
-            
-            // Esegui il reindirizzamento
-            window.location.replace(finalUrl);
+            try {
+                const baseUrl = "new";
+                
+                // Crea un oggetto URL per la destinazione.
+                const finalUrl = new URL(baseUrl);
+                
+                // Prendi l'intera query string (?path=...&token=...) dalla pagina corrente
+                // e assegnala in modo sicuro all'URL di destinazione.
+                // Questo Ã¨ il modo piÃ¹ robusto per copiare tutti i parametri.
+                finalUrl.search = window.location.search;
+                
+                document.getElementById('status').textContent = 'Reindirizzamento in corso...';
+                document.getElementById('details').textContent = 'A ' + finalUrl.href;
+                
+                // Esegui il reindirizzamento
+                window.location.replace(finalUrl.href);
+            } catch (e) {
+                document.getElementById('status').textContent = 'Errore critico durante il reindirizzamento.';
+                document.getElementById('details').textContent = e.message;
+            }
         })();
     </script>
 </body>
 </html>
+
 
 
 
