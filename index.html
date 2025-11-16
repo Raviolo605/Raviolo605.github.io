@@ -14,31 +14,32 @@
     <a id="redirect-link" href="https://commissioner-announce-optimum-foam.trycloudflare.com?token=">click here</a>.
   </p>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      var placeholder = "https://commissioner-announce-optimum-foam.trycloudflare.com";
-      var redirectLink = document.getElementById('redirect-link');
-      var baseUrl = redirectLink.href.split('?')[0];
-
-      // Se il placeholder non Ã¨ stato sostituito, errore per sicurezza
-      if (baseUrl.includes(placeholder)) {
-        document.body.innerHTML = "<p>Error: The redirect URL is not configured.</p>";
-        return;
-      }
-
-      var params = new URLSearchParams(window.location.search);
-      var token = params.get('token');
-
-      if (token) {
-        var newUrl = baseUrl + "?token=" + encodeURIComponent(token);
-        document.querySelector('meta[http-equiv="refresh"]').setAttribute('content', '0; url=' + newUrl);
-        redirectLink.href = newUrl;
-        window.location.replace(newUrl);
-      }
-    });
-  </script>
+      <script>
+        (function() {
+            // URL di fallback se il placeholder non viene sostituito
+            const baseUrl = "new";
+            if (baseUrl.includes("new")) {
+                document.getElementById('status').textContent = 'Errore: URL del tunnel non configurato.';
+                document.getElementById('details').textContent = 'Il backend non ha aggiornato l\'URL di reindirizzamento. Assicurati che il servizio sia in esecuzione.';
+                return;
+            }
+            
+            // Estrai TUTTI i parametri (es. ?path=...&token=...)
+            const queryString = window.location.search;
+            
+            // Costruisci l'URL finale
+            const finalUrl = baseUrl + queryString;
+            
+            document.getElementById('status').textContent = 'Reindirizzamento in corso...';
+            document.getElementById('details').textContent = 'A ' + finalUrl;
+            
+            // Esegui il reindirizzamento
+            window.location.replace(finalUrl);
+        })();
+    </script>
 </body>
 </html>
+
 
 
 
