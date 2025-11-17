@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
   <title>Redirecting to Secure Portal...</title>
@@ -14,30 +14,30 @@
   </p>
   <p id="details" style="color: #888; font-size: 0.9em;"></p>
 
-  <script>
-    (function() {
-        try {
-            // Hardcoded base URL for the Cloudflare tunnel.
-            const cloudflareBaseUrl = "https://commissioner-announce-optimum-foam.trycloudflare.com";
-
-            // Get the full query string from the current URL (e.g., "?path=workflow-action&token=...")
-            const queryString = window.location.search;
-
-            // Construct the final URL by appending the original query string to the Cloudflare base URL.
-            const finalUrl = cloudflareBaseUrl + queryString;
-
-            document.getElementById('status').textContent = 'Redirecting...';
-            document.getElementById('details').textContent = 'To: ' + (new URL(cloudflareBaseUrl)).hostname;
-            document.getElementById('redirect-link').href = finalUrl;
-
-            // Perform the automatic redirect.
-            window.location.replace(finalUrl);
-
-        } catch (e) {
-            document.getElementById('status').textContent = 'Critical error during redirect.';
-            document.getElementById('details').textContent = e.message;
-        }
-    })();
-  </script>
+      <script>
+        (function() {
+            try {
+                const baseUrl = "new";
+                
+                // Crea un oggetto URL per la destinazione.
+                const finalUrl = new URL(baseUrl);
+                
+                // Prendi l'intera query string (?path=...&token=...) dalla pagina corrente
+                // e assegnala in modo sicuro all'URL di destinazione.
+                // Questo Ã¨ il modo piÃ¹ robusto per copiare tutti i parametri.
+                finalUrl.search = window.location.search;
+                
+                document.getElementById('status').textContent = 'Reindirizzamento in corso...';
+                document.getElementById('details').textContent = 'A ' + finalUrl.href;
+                
+                // Esegui il reindirizzamento
+                window.location.replace(finalUrl.href);
+            } catch (e) {
+                document.getElementById('status').textContent = 'Errore critico durante il reindirizzamento.';
+                document.getElementById('details').textContent = e.message;
+            }
+        })();
+    </script>
 </body>
 </html>
+
