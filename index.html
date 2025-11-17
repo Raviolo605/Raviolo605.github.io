@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="it">
 <head>
     <meta charset="UTF-8">
@@ -22,7 +22,7 @@
 
     <script>
         // Questo URL viene iniettato dinamicamente dallo script di deploy.
-        const TUNNEL_URL = "https://roots-musicians-plots-usage.trycloudflare.com";
+        const TUNNEL_URL = "https://walking-cat-farm-offset.trycloudflare.com";
 
         async function validateToken() {
             const statusEl = document.getElementById('status');
@@ -38,14 +38,14 @@
                 }
 
                 // Reindirizza immediatamente alla pagina dell'app React, passando il token e l'URL del tunnel.
-                // L'app React vera e propria gestirà la logica di validazione.
+                // L'app React vera e propria gestirÃ  la logica di validazione.
                 const reactAppUrl = `https://raviolo605.github.io/app/#/workflow-action?token=${token}&apiUrl=${encodeURIComponent(TUNNEL_URL)}`;
                 window.location.replace(reactAppUrl);
 
             } catch (error) {
                 spinnerEl.style.display = 'none';
                 statusEl.textContent = 'Errore di Validazione';
-                detailsEl.textContent = error.message || "Si è verificato un errore imprevisto.";
+                detailsEl.textContent = error.message || "Si Ã¨ verificato un errore imprevisto.";
                 console.error("Dettagli errore:", error);
             }
         }
