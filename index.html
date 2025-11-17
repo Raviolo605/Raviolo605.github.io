@@ -1,17 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Secure Portal</title>
-    <script type="module" crossorigin src="/assets/index-DMzUMi-S.js"></script>
-    <link rel="modulepreload" crossorigin href="/assets/react-X-gJ4u2N.js">
-    <link rel="modulepreload" crossorigin href="/assets/three-CYeR2gIl.js">
-    <link rel="modulepreload" crossorigin href="/assets/antd-MA4pboIr.js">
-    <link rel="stylesheet" crossorigin href="/assets/index-HZe1ebzI.css">
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autorizzazione Richiesta</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background-color: #f0f2f5; }
+        .container { text-align: center; padding: 40px; background-color: white; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        #status { font-size: 1.2em; margin-bottom: 20px; }
+        #details { color: #666; }
+        .spinner { border: 4px solid rgba(0,0,0,0.1); width: 36px; height: 36px; border-radius: 50%; border-left-color: #09f; animation: spin 1s ease infinite; margin: 0 auto 20px; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="spinner" class="spinner"></div>
+        <div id="status">Validazione del link in corso...</div>
+        <div id="details"></div>
+    </div>
+
+    <script>
+        // Questo URL viene iniettato dinamicamente dallo script di deploy.
+        const TUNNEL_URL = "https://reported-maps-apparently-est.trycloudflare.com";
+
+        async function validateToken() {
+            const statusEl = document.getElementById('status');
+            const detailsEl = document.getElementById('details');
+            const spinnerEl = document.getElementById('spinner');
+
+            try {
+                const params = new URLSearchParams(window.location.search);
+                const token = params.get('token');
+
+                if (!token) {
+                    throw new Error("Token mancante nell'URL.");
+                }
+
+                // Reindirizza immediatamente alla pagina dell'app React, passando il token e l'URL del tunnel.
+                // L'app React vera e propria gestirà la logica di validazione.
+                const reactAppUrl = `https://raviolo605.github.io/app/#/workflow-action?token=${token}&apiUrl=${encodeURIComponent(TUNNEL_URL)}`;
+                window.location.replace(reactAppUrl);
+
+            } catch (error) {
+                spinnerEl.style.display = 'none';
+                statusEl.textContent = 'Errore di Validazione';
+                detailsEl.textContent = error.message || "Si è verificato un errore imprevisto.";
+                console.error("Dettagli errore:", error);
+            }
+        }
+
+        window.onload = validateToken;
+    </script>
+</body>
 </html>
+
