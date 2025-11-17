@@ -1,8 +1,8 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
   <title>Redirecting to Secure Portal...</title>
-  <!-- Lo script automatico sostituirÃ  questo URL -->
+  <!-- Lo script automatico sostituirà questo URL -->
   <meta http-equiv="refresh" content="0; url=https://raviolo605.github.io/" />
   <style>
     body { font-family: sans-serif; text-align: center; padding-top: 50px; }
@@ -16,31 +16,49 @@
   </p>
   <p id="details" style="color: #888; font-size: 0.9em;"></p>
 
-      <script>
-        (function() {
-            try {
-                const baseUrl = "new";
-                
-                // Crea un oggetto URL per la destinazione.
-                const finalUrl = new URL(baseUrl);
-                
-                // Prendi l'intera query string (?path=...&token=...) dalla pagina corrente
-                // e assegnala in modo sicuro all'URL di destinazione.
-                // Questo Ã¨ il modo piÃ¹ robusto per copiare tutti i parametri.
-                finalUrl.search = window.location.search;
-                
-                document.getElementById('status').textContent = 'Reindirizzamento in corso...';
-                document.getElementById('details').textContent = 'A ' + finalUrl.href;
-                
-                // Esegui il reindirizzamento
-                window.location.replace(finalUrl.href);
-            } catch (e) {
-                document.getElementById('status').textContent = 'Errore critico durante il reindirizzamento.';
-                document.getElementById('details').textContent = e.message;
+  <script>
+    (function() {
+        const statusElement = document.getElementById('status');
+        const detailsElement = document.getElementById('details');
+        const linkElement = document.getElementById('redirect-link');
+
+        try {
+            const params = new URLSearchParams(window.location.search);
+            const cfUrl = params.get('cf-url');
+
+            if (!cfUrl) {
+                throw new Error("URL parameter 'cf-url' is missing.");
             }
-        })();
-    </script>
+
+            detailsElement.textContent = 'Decoding URL...';
+            const finalUrl = decodeURIComponent(cfUrl);
+            
+            // --- DEBUGGING STEP ---
+            // Display the URL we are about to use.
+            detailsElement.textContent = 'Decoded URL: ' + finalUrl;
+
+            if (!finalUrl || !finalUrl.startsWith('http')) {
+                throw new Error("Invalid or non-HTTP URL format after decoding.");
+            }
+            
+            statusElement.textContent = 'Redirecting...';
+            linkElement.href = finalUrl;
+
+            // Try to parse for display, but redirect with the raw string
+            try {
+                detailsElement.textContent = 'Redirecting to host: ' + (new URL(finalUrl)).hostname;
+            } catch (parseError) {
+                detailsElement.textContent = 'Could not parse hostname, but attempting redirect anyway.';
+            }
+
+            window.location.replace(finalUrl);
+        } catch (e) {
+            statusElement.textContent = 'Critical error during redirect.';
+            // Append the error to any existing debug message
+            detailsElement.textContent = detailsElement.textContent + ' | ERROR: ' + e.message;
+        }
+    })();
+  </script>
 </body>
 </html>
-
 
