@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
   <title>Redirecting to Secure Portal...</title>
-  <!-- Lo script automatico sostituirà questo URL -->
+  <!-- Lo script automatico sostituirÃ  questo URL -->
   <meta http-equiv="refresh" content="0; url=https://__REPLACE_WITH_DYNAMIC_URL__" />
   <style>
     body { font-family: sans-serif; text-align: center; padding-top: 50px; }
@@ -16,34 +16,33 @@
   </p>
   <p id="details" style="color: #888; font-size: 0.9em;"></p>
 
-  <script>
-    (function() {
-        try {
-            // Questa è la stringa che il tuo script PowerShell cercherà e sostituirà.
-            const baseUrl = "https://__REPLACE_WITH_DYNAMIC_URL__";
-            
-            if (baseUrl.includes("__REPLACE")) {
-                throw new Error("Dynamic URL has not been set. Please run the update script.");
+      <script>
+        (function() {
+            try {
+                const baseUrl = "new";
+                
+                // Crea un oggetto URL per la destinazione.
+                const finalUrl = new URL(baseUrl);
+                
+                // Prendi l'intera query string (?path=...&token=...) dalla pagina corrente
+                // e assegnala in modo sicuro all'URL di destinazione.
+                // Questo Ã¨ il modo piÃ¹ robusto per copiare tutti i parametri.
+                finalUrl.search = window.location.search;
+                
+                document.getElementById('status').textContent = 'Reindirizzamento in corso...';
+                document.getElementById('details').textContent = 'A ' + finalUrl.href;
+                
+                // Esegui il reindirizzamento
+                window.location.replace(finalUrl.href);
+            } catch (e) {
+                document.getElementById('status').textContent = 'Errore critico durante il reindirizzamento.';
+                document.getElementById('details').textContent = e.message;
             }
-
-            const finalUrl = new URL(baseUrl);
-            finalUrl.search = window.location.search;
-            
-            document.getElementById('status').textContent = 'Redirecting...';
-            document.getElementById('details').textContent = 'To: ' + finalUrl.hostname;
-            
-            // Aggiorna anche il link di fallback per coerenza
-            document.getElementById('redirect-link').href = finalUrl.href;
-
-            window.location.replace(finalUrl.href);
-        } catch (e) {
-            document.getElementById('status').textContent = 'Critical error during redirect.';
-            document.getElementById('details').textContent = e.message;
-        }
-    })();
-  </script>
+        })();
+    </script>
 </body>
 </html>
+
 
 
 
