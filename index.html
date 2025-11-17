@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
   <title>Redirecting to Secure Portal...</title>
@@ -22,44 +22,30 @@
   </p>
   <p id="details" style="color: #888; font-size: 0.9em;"></p>
 
-  <script>
-    (function() {
-        try {
-            const params = new URLSearchParams(window.location.search);
-            const cfUrl = params.get('cf-url');
-
-            if (!cfUrl) {
-                throw new Error("Required 'cf-url' parameter not found in the link.");
-            }
-
-            const finalUrl = decodeURIComponent(cfUrl);
-
-            if (!finalUrl || !finalUrl.startsWith('http')) {
-                throw new Error("Decoded URL is invalid or not an HTTP link.");
-            }
-            
-            document.getElementById('status').textContent = 'Redirecting...';
-            document.getElementById('redirect-link').href = finalUrl;
-            
-            // Use a temporary URL object just to safely get the hostname for display
+      <script>
+        (function() {
             try {
-                 document.getElementById('details').textContent = 'To: ' + (new URL(finalUrl)).hostname;
+                const baseUrl = "new";
+                
+                // Crea un oggetto URL per la destinazione.
+                const finalUrl = new URL(baseUrl);
+                
+                // Prendi l'intera query string (?path=...&token=...) dalla pagina corrente
+                // e assegnala in modo sicuro all'URL di destinazione.
+                // Questo Ã¨ il modo piÃ¹ robusto per copiare tutti i parametri.
+                finalUrl.search = window.location.search;
+                
+                document.getElementById('status').textContent = 'Reindirizzamento in corso...';
+                document.getElementById('details').textContent = 'A ' + finalUrl.href;
+                
+                // Esegui il reindirizzamento
+                window.location.replace(finalUrl.href);
             } catch (e) {
-                 document.getElementById('details').textContent = 'To an external secure portal.';
+                document.getElementById('status').textContent = 'Errore critico durante il reindirizzamento.';
+                document.getElementById('details').textContent = e.message;
             }
-
-            window.location.replace(finalUrl);
-
-        } catch (e) {
-            document.getElementById('status').textContent = 'Critical Error During Redirect';
-            document.getElementById('details').textContent = 'The link is malformed. Please check the original email.';
-            
-            const errorDiv = document.createElement('div');
-            errorDiv.id = 'error-info';
-            errorDiv.innerText = 'Error details: ' + e.message;
-            document.body.appendChild(errorDiv);
-        }
-    })();
-  </script>
+        })();
+    </script>
 </body>
 </html>
+
