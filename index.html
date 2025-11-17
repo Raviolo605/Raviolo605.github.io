@@ -1,64 +1,17 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-  <title>Redirecting to Secure Portal...</title>
-  <!-- The script below will be updated automatically -->
-  <meta http-equiv="refresh" content="0; url=https://travelling-myth-mpg-scanners.trycloudflare.com" />
-  <style>
-    body { font-family: sans-serif; text-align: center; padding-top: 50px; }
-    #status, #details { font-size: 1.2em; }
-  </style>
-</head>
-<body>
-  <p id="status">Initializing redirect...</p>
-  <p>If you are not redirected automatically, 
-    <a id="redirect-link" href="https://travelling-myth-mpg-scanners.trycloudflare.com">click here</a>.
-  </p>
-  <p id="details" style="color: #888; font-size: 0.9em;"></p>
-
-  <script>
-    (function() {
-        try {
-            // This placeholder is replaced by the update script.
-            const baseUrl = "https://travelling-myth-mpg-scanners.trycloudflare.com";
-            
-            if (baseUrl.includes("__REPLACE")) {
-                throw new Error("Dynamic URL has not been set. Please run the update script.");
-            }
-
-            const finalUrl = new URL(baseUrl);
-            // Append the query string from the current URL (e.g., ?path=...&token=...)
-            finalUrl.search = window.location.search;
-            
-            document.getElementById('status').textContent = 'Redirecting...';
-            document.getElementById('details').textContent = 'To: ' + finalUrl.hostname;
-            
-            // Update the fallback link for consistency.
-            document.getElementById('redirect-link').href = finalUrl.href;
-
-            // Perform the redirect.
-            window.location.replace(finalUrl.href);
-        } catch (e) {
-            document.getElementById('status').textContent = 'Critical error during redirect.';
-            document.getElementById('details').textContent = e.message;
-        }
-    })();
-  </script>
-</body>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/faviconNEW.png" />
+    <title>Secure Portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script type="module" crossorigin src="/assets/index-CttTuaty.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/react-X-gJ4u2N.js">
+    <link rel="modulepreload" crossorigin href="/assets/three-CYeR2gIl.js">
+    <link rel="modulepreload" crossorigin href="/assets/antd-MA4pboIr.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-HZe1ebzI.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
